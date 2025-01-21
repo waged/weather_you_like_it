@@ -1,0 +1,14 @@
+{
+    "start": "Start",
+    "next": "Next",
+    "skip": "Skip",
+    "finish": "Finish",
+    "onBoardingTitle1":"Stay Updated, Anytime, Anywhere",
+    "onBoardingSubTitle1":"Get real-time weather updates for your favorite locations at your fingertips.",
+    "onBoardingTitle2":"Seamless Access to Weather Data",
+    "onBoardingSubTitle2":"Switch effortlessly between cities or use your current location to get accurate weather details instantly.",
+    "onBoardingTitle3":"Never Miss a Weather Update",
+    "onBoardingSubTitle3":"Even offline, view the last updated weather data and stay prepared for any weather condition.",
+    "onBoardingTitle4":"Your Personalized Weather Companion",
+    "onBoardingSubTitle4":"Customize your weather experience with a sleek design and features tailored to your needs."
+}
