@@ -249,4 +249,9 @@ class AppRepoImpl implements IAppRepo {
   }
 
   //________________________________REAL-WORLD REQUESTS________________________________
+
+// @override
+//   Future<Either<Failure, User>> getWeatherData(Long lat, Long lng) {
+
+//   }
 }

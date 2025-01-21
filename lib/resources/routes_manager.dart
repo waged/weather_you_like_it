@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weather_you_like_it/presentation/home_view.dart';
+import 'package:weather_you_like_it/presentation/home_main_view.dart';
 import 'package:weather_you_like_it/presentation/onboarding_view.dart';
 import 'package:weather_you_like_it/presentation/settings_view.dart';
 
@@ -25,7 +25,7 @@ class RoutesManager {
       GoRoute(
         path: '/home',
         name: 'home',
-        builder: (context, state) => const HomeView(),
+        builder: (context, state) => const HomeMainView(),
       ),
       GoRoute(
         path: '/settings',

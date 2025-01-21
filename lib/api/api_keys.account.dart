@@ -1,4 +1,7 @@
 class APIKeys {
+  // API REQUEST WILL BE LIKE THE FOLLOWING :
+  // https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={API key}
+
   /*
   todo: Add your own weather API key to fetch data.
   Steps:
