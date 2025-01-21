@@ -8,8 +8,7 @@ part 'responses.g.dart';
 class Failure with _$Failure {
   // Represents an API error with status code and error message
   const factory Failure.httpError(
-      {@JsonKey(name: "status") required int? statusCode,
-      required String? error,
+      {@JsonKey(name: "cod") required int? statusCode,
       required String? message}) = _HttpError;
 
   // Represents network issues

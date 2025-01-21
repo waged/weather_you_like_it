@@ -2,8 +2,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:dartz/dartz.dart';
+import 'package:weather_you_like_it/api/api_keys.dart';
 import 'package:weather_you_like_it/domain/models/responses.dart';
 import 'package:weather_you_like_it/repository/app_repo.dart';
+import 'package:weather_you_like_it/resources/url_manager.dart';
 import 'package:weather_you_like_it/utils/log_utils.dart';
 
 const String APPLICATION_JSON = "application/json";
@@ -49,105 +51,8 @@ class AppRepoImpl implements IAppRepo {
       Failure.httpError(
         statusCode: response.statusCode,
         message: "failure_http",
-        error: response.body,
       ),
     );
-  }
-
-  Future<Either<Failure, T>> _postRequest<T>({
-    required String url,
-    Map<String, dynamic>? bodyData,
-    required T Function(Map<String, dynamic>) fromJson,
-    Map<String, String>? headers,
-  }) async {
-    // Set default headers if none are provided
-    final effectiveHeaders = headers ??
-        {
-          CONTENT_TYPE: APPLICATION_JSON,
-          ACCEPT: APPLICATION_JSON,
-          CACHE_CONTROL: NO_CACHE,
-        };
-
-    try {
-      // Encode body data if provided
-      final body = bodyData != null ? jsonEncode(bodyData) : null;
-
-      // Execute HTTP POST request
-      final response = await http.post(
-        Uri.parse(url),
-        headers: effectiveHeaders,
-        body: body,
-      );
-
-      // Log the status and response body
-      logDebug("Response status: ${response.statusCode}");
-      logDebug("Response body: ${response.body}");
-
-      // Handle response
-      if (response.statusCode == 200) {
-        return _handleSuccessResponse(response, fromJson);
-      } else {
-        return _handleErrorResponse(response);
-      }
-    } catch (e, stackTrace) {
-      logDebug("Request failed in catch: $e");
-      logDebug("Stack trace: $stackTrace");
-      return Left(
-        Failure.unexpected(
-          statusCode: -1,
-          message: "failure_catch",
-          error: 'An unexpected error occurred: $e',
-        ),
-      );
-    }
-  }
-
-  Future<Either<Failure, T>> _putRequest<T>({
-    required String url,
-    Map<String, dynamic>? bodyData,
-    required T Function(Map<String, dynamic>) fromJson,
-    Map<String, String>? headers,
-  }) async {
-    // Set default headers if none are provided
-    final effectiveHeaders = headers ??
-        {
-          CONTENT_TYPE: APPLICATION_JSON,
-          ACCEPT: APPLICATION_JSON,
-          CACHE_CONTROL: NO_CACHE,
-        };
-
-    try {
-      // Encode body data if provided
-      final body = bodyData != null ? jsonEncode(bodyData) : null;
-
-      // Execute HTTP POST request
-      final response = await http.put(
-        Uri.parse(url),
-        headers: effectiveHeaders,
-        body: body,
-      );
-
-      // Log the status and response body
-      logDebug("Response status: ${response.statusCode}");
-      logDebug("Response body: ${response.body}");
-
-      // Handle response
-      if (response.statusCode == 200) {
-        return _handleSuccessResponse(response, fromJson);
-      } else {
-        return _handleErrorResponse(response);
-      }
-    } catch (e, stackTrace) {
-      logDebug("Request failed in catch: $e");
-      logDebug("Stack trace: $stackTrace");
-      return Left(
-        Failure.unexpected(
-          statusCode: -1,
-          message: "failure_catch",
-          error: 'An unexpected error occurred: $e',
-        ),
-      );
-    }
   }
 
   Future<Either<Failure, T>> _getRequest<T>({
@@ -189,69 +94,18 @@ class AppRepoImpl implements IAppRepo {
     }
   }
 
-  Future<Either<Failure, T>> _deleteRequest<T>({
-    required String url,
-    Map<String, dynamic>? bodyData,
-    required T Function(Map<String, dynamic>) fromJson,
-    Map<String, String>? headers,
-  }) async {
-    // Set default headers if none are provided
-    final effectiveHeaders = headers ??
-        {
-          CONTENT_TYPE: APPLICATION_JSON,
-          ACCEPT: APPLICATION_JSON,
-          CACHE_CONTROL: NO_CACHE,
-        };
-
-    try {
-      // Encode body data if provided
-      final body = bodyData != null ? jsonEncode(bodyData) : null;
-
-      // Execute HTTP DELETE request
-      final request = http.Request('DELETE', Uri.parse(url))
-        ..headers.addAll(effectiveHeaders);
-
-      if (body != null) {
-        request.body = body;
-      }
-
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-
-      // Log the status and response body
-      // logDebug("Response status: ${response.statusCode}");
-      // logDebug("Response body: ${response.body}");
-
-      // Handle response
-      if (response.statusCode == 200) {
-        return _handleSuccessResponse(response, fromJson);
-      } else {
-        return _handleErrorResponse(response);
-      }
-    } catch (e, stackTrace) {
-      logDebug("Request failed in catch: $e");
-      logDebug("Stack trace: $stackTrace");
-      return Left(Failure.unexpected(
-        statusCode: -1,
-        message: "failure_catch",
-        error: 'An unexpected error occurred: $e',
-      ));
-    }
-  }
-
-  Map<String, String> _buildHeaders(String token) {
-    return {
-      CONTENT_TYPE: APPLICATION_JSON,
-      ACCEPT: APPLICATION_JSON,
-      AUTHORIZATION: "Bearer $token",
-      CACHE_CONTROL: NO_CACHE,
-    };
-  }
-
   //________________________________REAL-WORLD REQUESTS________________________________
 
-// @override
-//   Future<Either<Failure, User>> getWeatherData(Long lat, Long lng) {
-
-//   }
+  @override
+  Future<Either<Failure, WeatherResponse>> getWeatherData(
+    double lat,
+    double lon,
+  ) async {
+    final url =
+        '${UrlManager.baseCurrentWeatherUrl}?lat=$lat&lon=$lon&lang=DE&units=metric&appid=${APIKeys.openWeatherAPIKey}';
+    return await _getRequest<WeatherResponse>(
+      url: url,
+      fromJson: (json) => WeatherResponse.fromJson(json),
+    );
+  }
 }

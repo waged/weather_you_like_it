@@ -8,16 +8,14 @@ part of 'responses.dart';
 
 _$HttpErrorImpl _$$HttpErrorImplFromJson(Map<String, dynamic> json) =>
     _$HttpErrorImpl(
-      statusCode: (json['status'] as num?)?.toInt(),
-      error: json['error'] as String?,
+      statusCode: (json['cod'] as num?)?.toInt(),
       message: json['message'] as String?,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$HttpErrorImplToJson(_$HttpErrorImpl instance) =>
     <String, dynamic>{
-      'status': instance.statusCode,
-      'error': instance.error,
+      'cod': instance.statusCode,
       'message': instance.message,
       'runtimeType': instance.$type,
     };
@@ -178,33 +176,4 @@ Map<String, dynamic> _$$SysImplToJson(_$SysImpl instance) => <String, dynamic>{
       'country': instance.country,
       'sunrise': instance.sunrise,
       'sunset': instance.sunset,
-    };
-
-_$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
-      id: json['_id'] as String,
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
-      email: json['email'] as String?,
-      phone:
-          (json['phone'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      address:
-          (json['address'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null
-          ? null
-          : DateTime.parse(json['updatedAt'] as String),
-    );
-
-Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
-    <String, dynamic>{
-      '_id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
-      'email': instance.email,
-      'phone': instance.phone,
-      'address': instance.address,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
     };
