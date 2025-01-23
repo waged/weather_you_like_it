@@ -7,8 +7,8 @@ class AppService {
 
   AppService({required this.appRepo});
 
-  Future<Either<Failure, WeatherResponse>> getWeatherData(
-      double lat, double lng) async {
-    return appRepo.getWeatherData(lat, lng);
+  Future<Either<Failure, WeatherResponse>> getCurrentWeatherData(
+      {required double lat, required double lng}) async {
+    return appRepo.getCurrentWeatherData(lat, lng);
   }
 }

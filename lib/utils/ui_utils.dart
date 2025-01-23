@@ -18,11 +18,12 @@ void scrollToEnd(ScrollController scrollController) {
   );
 }
 
-Widget getAnimatedImage(String animationName, bool isLoop) {
+Widget getAnimatedImage(
+    String animationName, double height, double widht, bool isLoop) {
   return SizedBox(
-    height: 100.0,
-    width: 100.0,
-    child: Lottie.asset(animationName, repeat: isLoop),
+    height: height,
+    width: widht,
+    child: Lottie.asset(animationName, repeat: isLoop), //json picture
   );
 }
 

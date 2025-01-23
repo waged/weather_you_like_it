@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_you_like_it/domain/models/city_object.dart';
 import 'package:weather_you_like_it/domain/services/app_service.dart';
 import 'package:weather_you_like_it/repository/app_repo.dart';
 import 'package:weather_you_like_it/repository/app_repo_impl.dart';
@@ -14,6 +15,8 @@ Future<void> setupLocator() async {
   // Fetch async values
   final appPreferences = AppPreferences(sharedPrefs);
   final isOnboarding = await appPreferences.isOnboardingScreenViewed();
+  final defaultCityObject = await appPreferences.getFavoriteCity() ??
+      CityObject(cityName: "Dortmund", lat: 51.5136, lng: 7.4653);
 
   // Register dependencies
   instanceGetIt
@@ -22,6 +25,7 @@ Future<void> setupLocator() async {
     ..registerLazySingleton<RoutesManager>(() {
       return RoutesManager(
         isOnBoarding: isOnboarding,
+        cityObject: defaultCityObject,
       );
     })
     ..registerLazySingleton<AppService>(
