@@ -1,3 +1,4 @@
+// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_you_like_it/app/app_prefs.dart';
@@ -10,7 +11,6 @@ import 'package:weather_you_like_it/resources/assets_manager.dart';
 import 'package:weather_you_like_it/utils/log_utils.dart';
 import 'package:weather_you_like_it/utils/ui_utils.dart';
 import 'package:weather_you_like_it/widgets/main_weather_view.dart';
-
 
 class HomeMainView extends ConsumerWidget {
   CityObject cityObject;
@@ -32,35 +32,36 @@ class HomeMainView extends ConsumerWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: cities.map((city) {
-                  // city name returned from the api is not as descriptive as the default names.
-                  // comparing with the lat and lng.
+                children: cities.map(
+                  (city) {
+                    // city name returned from the api is not as descriptive as the default names.
+                    // comparing with the lat and lng.
+                    final isSelected = city.lat == cityObject.lat &&
+                        city.lng == cityObject.lng;
 
-                  final isSelected =
-                      city.lat == cityObject.lat && city.lng == cityObject.lng;
-
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: isSelected
-                            ? Colors.blueAccent
-                            : Colors.grey.shade300,
-                        foregroundColor:
-                            isSelected ? Colors.white : Colors.black,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isSelected
+                              ? Colors.blueAccent
+                              : Colors.grey.shade300,
+                          foregroundColor:
+                              isSelected ? Colors.white : Colors.black,
+                        ),
+                        onPressed: () async {
+                          cityObject = city;
+                          logDebug("Selected city: ${city.cityName}");
+                          ref.invalidate(getCityWeatherFutureProvider);
+                          instanceGetIt
+                              .get<AppPreferences>()
+                              .setFavoriteCity(favCity: city);
+                        },
+                        child: Text(city.cityName),
                       ),
-                      onPressed: () async {
-                        cityObject = city;
-                        logDebug("Selected city: ${city.cityName}");
-                        ref.invalidate(getCityWeatherFutureProvider);
-                        instanceGetIt
-                            .get<AppPreferences>()
-                            .setFavoriteCity(favCity: city);
-                      },
-                      child: Text(city.cityName),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  },
+                ).toList(),
               ),
             ),
             const SizedBox(height: 16),
