@@ -16,6 +16,9 @@ class SVGAssets {
   static const String onboarding2 = "$SVG_PATH/background_2.svg";
   static const String onboarding3 = "$SVG_PATH/background_3.svg";
   static const String onboarding4 = "$SVG_PATH/background_4.svg";
+  static const String berlin = "$SVG_PATH/berlin.svg";
+  static const String hamburg = "$SVG_PATH/hamburg.svg";
+  static const String dortmund = "$SVG_PATH/dortmund.svg";
 }
 
 class JsonAssets {
@@ -26,4 +29,20 @@ class JsonAssets {
   static const String error = "$JSON_PATH/error.json";
   static const String loading = "$JSON_PATH/loading.json";
   static const String success = "$JSON_PATH/success_paper_plane.json";
+  static const String cloud = "$JSON_PATH/cloud.json";
+  static const String cloudRainStorm = "$JSON_PATH/cloud_rain_storm.json";
+  static const String cloudWind = "$JSON_PATH/cloud_wind.json";
+  static const String cloudStorm = "$JSON_PATH/cloud_storm.json";
+  static const String cloudSnow = "$JSON_PATH/cloud_snow.json";
+  static const String moonCloudRain = "$JSON_PATH/moon_cloud_rain.json";
+  static const String moonCloudSnow = "$JSON_PATH/moon_cloud_snow.json";
+  static const String moonClouds = "$JSON_PATH/moon_clouds.json";
+  static const String moon = "$JSON_PATH/moon.json";
+  static const String sun = "$JSON_PATH/sun.json";
+  static const String sunClouds = "$JSON_PATH/sun_clouds.json";
+  static const String sunCloudWind = "$JSON_PATH/sun_cloud_wind.json";
+  static const String sunCloudStormRain =
+      "$JSON_PATH/sun_cloud_storm_rain.json";
+  static const String sunCloudSnow = "$JSON_PATH/sun_cloud_snow.json";
+  static const String sundCloudRain = "$JSON_PATH/sun_cloud_rain.json";
 }

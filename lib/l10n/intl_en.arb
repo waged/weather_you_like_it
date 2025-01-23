@@ -10,5 +10,6 @@
     "onBoardingTitle3":"Never Miss a Weather Update",
     "onBoardingSubTitle3":"Even offline, view the last updated weather data and stay prepared for any weather condition.",
     "onBoardingTitle4":"Your Personalized Weather Companion",
-    "onBoardingSubTitle4":"Customize your weather experience with a sleek design and features tailored to your needs."
+    "onBoardingSubTitle4":"Customize your weather experience with a sleek design and features tailored to your needs.",
+    "noDataFound":"No data available. Please check your connection."
 }

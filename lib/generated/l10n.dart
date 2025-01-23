@@ -169,6 +169,16 @@ class S {
       args: [],
     );
   }
+
+  /// `No data available. Please check your connection.`
+  String get noDataFound {
+    return Intl.message(
+      'No data available. Please check your connection.',
+      name: 'noDataFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

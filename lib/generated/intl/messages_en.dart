@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "finish": MessageLookupByLibrary.simpleMessage("Finish"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "noDataFound": MessageLookupByLibrary.simpleMessage(
+            "No data available. Please check your connection."),
         "onBoardingSubTitle1": MessageLookupByLibrary.simpleMessage(
             "Get real-time weather updates for your favorite locations at your fingertips."),
         "onBoardingSubTitle2": MessageLookupByLibrary.simpleMessage(

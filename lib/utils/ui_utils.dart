@@ -23,7 +23,7 @@ Widget getAnimatedImage(
   return SizedBox(
     height: height,
     width: widht,
-    child: Lottie.asset(animationName, repeat: isLoop), //json picture
+    child: Lottie.asset(animationName, ), //json picture
   );
 }
 
