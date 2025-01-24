@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "finish": MessageLookupByLibrary.simpleMessage("Fertig"),
+        "humidity": MessageLookupByLibrary.simpleMessage("Luftfeuchtigkeit"),
         "next": MessageLookupByLibrary.simpleMessage("Nächste"),
         "noDataFound": MessageLookupByLibrary.simpleMessage(
             "Keine Daten verfügbar. Bitte überprüfen Sie Ihre Verbindung."),

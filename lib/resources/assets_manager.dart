@@ -22,6 +22,7 @@ class SVGAssets {
 }
 
 class JsonAssets {
+  //moonCloudRain cloudWind moonClouds moon
   static const String clockSand = "$JSON_PATH/clock_sand.json";
   static const String clockTime = "$JSON_PATH/clock_time.json";
   static const String delete = "$JSON_PATH/delete.json";
@@ -31,18 +32,18 @@ class JsonAssets {
   static const String success = "$JSON_PATH/success_paper_plane.json";
   static const String cloud = "$JSON_PATH/cloud.json";
   static const String cloudRainStorm = "$JSON_PATH/cloud_rain_storm.json";
-  static const String cloudWind = "$JSON_PATH/cloud_wind.json";
   static const String cloudStorm = "$JSON_PATH/cloud_storm.json";
   static const String cloudSnow = "$JSON_PATH/cloud_snow.json";
-  static const String moonCloudRain = "$JSON_PATH/moon_cloud_rain.json";
-  static const String moonCloudSnow = "$JSON_PATH/moon_cloud_snow.json";
+  static const String cloudRain = "$JSON_PATH/cloud_rain.json";
   static const String moonClouds = "$JSON_PATH/moon_clouds.json";
   static const String moon = "$JSON_PATH/moon.json";
+  static const String cloudWind = "$JSON_PATH/wind_cloud_new.json";
+  static const String moonCloudSnow = "$JSON_PATH/moon_cloud_snow.json";
   static const String sun = "$JSON_PATH/sun.json";
   static const String sunClouds = "$JSON_PATH/sun_clouds.json";
   static const String sunCloudWind = "$JSON_PATH/sun_cloud_wind.json";
   static const String sunCloudStormRain =
       "$JSON_PATH/sun_cloud_storm_rain.json";
   static const String sunCloudSnow = "$JSON_PATH/sun_cloud_snow.json";
-  static const String sundCloudRain = "$JSON_PATH/sun_cloud_rain.json";
+  static const String sunCloudRain = "$JSON_PATH/sun_cloud_rain.json";
 }

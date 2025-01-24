@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:lottie/lottie.dart';
+import 'package:weather_you_like_it/resources/assets_manager.dart';
+import 'package:weather_you_like_it/utils/log_utils.dart';
 
 void scrollToFirst(ScrollController scrollController) {
   scrollController.animateTo(
@@ -23,7 +25,9 @@ Widget getAnimatedImage(
   return SizedBox(
     height: height,
     width: widht,
-    child: Lottie.asset(animationName, ), //json picture
+    child: Lottie.asset(
+      animationName,
+    ), //json picture
   );
 }
 
@@ -59,4 +63,57 @@ Widget loadingEffect(BuildContext context) {
       ),
     ),
   );
+}
+
+/*
+
+
+01d	Clear Sky (Day)	sun.json
+01n	Clear Sky (Night)	moon.json
+09d	Shower Rain	cloud_rain_storm.json
+13d	Snow	cloud_snow.json
+11n	Thunderstorm (Night)	cloud_storm.json
+
+ */
+
+String getWeatherAnimation(String? icon) {
+  logDebug("the icon is : $icon");
+  switch (icon) {
+    case '01d': // Clear sky (day)
+      return JsonAssets.sun;
+    case '01n': // Clear sky (night)
+      return JsonAssets.moon;
+    case '02d': // Few clouds (day)
+      return JsonAssets.sunClouds;
+    case '02n': // Few clouds (night)
+      return JsonAssets.moonClouds;
+    case '03d': // Scattered clouds
+    case '03n':
+      return JsonAssets.cloud;
+    case '04d':
+      return JsonAssets.sunClouds;
+    case '04n':
+      return JsonAssets.cloudWind;
+    case '09d':
+      return JsonAssets.sunCloudRain;
+    case '09n':
+      return JsonAssets.cloudRainStorm;
+    case '10d':
+      return JsonAssets.sunCloudStormRain;
+    case '10n': // Rain (night)
+      return JsonAssets.cloudRain;
+    case '11d': // Thunderstorm (day)
+      return JsonAssets.sunCloudStormRain;
+    case '11n':
+      return JsonAssets.cloudRainStorm;
+    case '13d': // Snow
+      return JsonAssets.sunCloudSnow;
+    case '13n':
+      return JsonAssets.moonCloudSnow;
+    case '50d': // Mist
+    case '50n':
+      return JsonAssets.cloudWind;
+    default:
+      return JsonAssets.cloud; // Default animation
+  }
 }
