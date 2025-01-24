@@ -19,13 +19,6 @@ class HomeMainView extends ConsumerWidget {
 
   HomeMainView({super.key, required this.cityObject});
 
-  final cityIcons = {
-    "Berlin": SVGAssets.berlin,
-    "Hamburg": SVGAssets.hamburg,
-    "Dortmund": SVGAssets.dortmund,
-    "My Location": SVGAssets.myLocation,
-  };
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cities = ref.watch(defaultCitiesProvider);
@@ -167,7 +160,7 @@ class HomeMainView extends ConsumerWidget {
                       ),
                     ),
                   SvgPicture.asset(
-                    cityIcons[city.cityName]!,
+                    SVGAssets.cityIcons[city.cityName]!,
                     width: isSelected ? AppSize.s28 : AppSize.s24,
                     height: isSelected ? AppSize.s28 : AppSize.s24,
                   ),

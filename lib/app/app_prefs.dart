@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_you_like_it/domain/models/city_object.dart';
 import 'package:weather_you_like_it/domain/models/responses.dart';
+import 'package:weather_you_like_it/utils/log_utils.dart';
 
 const String PREFS_KEY_ONBOARDING = "PREFS_KEY_ONBOARDING";
 const String PREFS_KEY_AUTH_RESPONSE = "PREFS_KEY_AUTH_RESPONSE";
@@ -88,33 +89,29 @@ class AppPreferences {
     final timestamp =
         _sharedPreferences.getInt(PREFS_KEY_LAST_SUCCESS_CITY_TIMESTAMP);
 
+    // timestamp when there was no request saved before
     if (timestamp == null) {
       return null;
     }
     // Calculate the time difference
     final currentTime = DateTime.now().millisecondsSinceEpoch;
     final timeDifference = currentTime - timestamp;
-
-    if (timeDifference > 24 * 60 * 60 * 1000) {
+    // 12 hours to keep the data that is offline..
+    if (timeDifference > 12 * 60 * 60 * 1000) {
       return null;
     }
-
     final weatherResponseStr =
         _sharedPreferences.getString(PREFS_KEY_LAST_SUCCESS_CITY);
 
     if (weatherResponseStr == null) {
       return null;
     }
-
-    // Try parsing the JSON string into a WeatherResponse object
     try {
       final Map<String, dynamic> weatherResponse =
           jsonDecode(weatherResponseStr) as Map<String, dynamic>;
 
       return WeatherResponse.fromJson(weatherResponse);
     } catch (e) {
-      // Log the error (optional)
-      print('Error parsing weather response: $e');
       return null; // Return null if parsing fails
     }
   }
