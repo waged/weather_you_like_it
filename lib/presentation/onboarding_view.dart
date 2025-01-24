@@ -14,7 +14,6 @@ import '../resources/values_manager.dart';
 
 final pageViewController = PageController(initialPage: 0);
 
-
 class OnboardingView extends ConsumerWidget {
   final maxSlides = 3;
   final currentPageStateProvider = StateProvider<int>((ref) {
@@ -137,7 +136,7 @@ class OnboardingView extends ConsumerWidget {
                 instanceGetIt
                     .get<AppPreferences>()
                     .setOnboardingScreenViewed(true);
-                instanceGetIt<RoutesManager>().router.go('/login');
+                instanceGetIt<RoutesManager>().router.go('/home');
               } else {
                 pageViewController.nextPage(
                     duration: const Duration(seconds: 1),

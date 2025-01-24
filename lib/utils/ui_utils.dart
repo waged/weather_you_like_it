@@ -98,22 +98,22 @@ String getWeatherAnimation(String? icon) {
       return JsonAssets.sunCloudRain;
     case '09n':
       return JsonAssets.cloudRainStorm;
-    case '10d':
-      return JsonAssets.sunCloudStormRain;
+    case '10d': // Rain (day)
+      return JsonAssets.sunCloudRain;
     case '10n': // Rain (night)
       return JsonAssets.cloudRain;
     case '11d': // Thunderstorm (day)
       return JsonAssets.sunCloudStormRain;
-    case '11n':
+    case '11n': // Thunderstorm (day)
       return JsonAssets.cloudRainStorm;
-    case '13d': // Snow
+    case '13d': // Snow (day)
       return JsonAssets.sunCloudSnow;
-    case '13n':
+    case '13n': // Snow (dnightay)
       return JsonAssets.moonCloudSnow;
     case '50d': // Mist
     case '50n':
       return JsonAssets.cloudWind;
     default:
-      return JsonAssets.cloud; // Default animation
+      return JsonAssets.cloud;
   }
 }

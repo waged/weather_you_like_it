@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_you_like_it/domain/models/city_object.dart';
 import 'package:weather_you_like_it/domain/models/responses.dart';
-import 'package:weather_you_like_it/utils/log_utils.dart';
 
 const String PREFS_KEY_ONBOARDING = "PREFS_KEY_ONBOARDING";
 const String PREFS_KEY_AUTH_RESPONSE = "PREFS_KEY_AUTH_RESPONSE";
