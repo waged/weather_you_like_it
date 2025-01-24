@@ -20,6 +20,13 @@ class SVGAssets {
   static const String hamburg = "$SVG_PATH/hamburg.svg";
   static const String dortmund = "$SVG_PATH/dortmund.svg";
   static const String myLocation = "$SVG_PATH/location_pin.svg";
+
+  static const cityIcons = {
+    "Berlin": SVGAssets.berlin,
+    "Hamburg": SVGAssets.hamburg,
+    "Dortmund": SVGAssets.dortmund,
+    "My Location": SVGAssets.myLocation,
+  };
 }
 
 class JsonAssets {

@@ -14,7 +14,7 @@ Future<void> setupLocator() async {
 
   // Fetch async values
   final appPreferences = AppPreferences(sharedPrefs);
-  final isOnboarding = await appPreferences.isOnboardingScreenViewed();
+  final isOnboarding = appPreferences.isOnboardingScreenViewed();
   final defaultCityObject = await appPreferences.getFavoriteCity() ??
       CityObject(cityName: "Dortmund", lat: 51.5136, lng: 7.4653);
 

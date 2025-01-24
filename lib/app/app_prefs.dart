@@ -86,24 +86,36 @@ class AppPreferences {
 
   Future<WeatherResponse?> getWeatherResponse() async {
     final timestamp =
-        _sharedPreferences.getInt(PREFS_KEY_LAST_SUCCESS_CITY_TIMESTAMP) ??
-            DateTime.now().millisecondsSinceEpoch;
+        _sharedPreferences.getInt(PREFS_KEY_LAST_SUCCESS_CITY_TIMESTAMP);
+
+    if (timestamp == null) {
+      return null;
+    }
+    // Calculate the time difference
     final currentTime = DateTime.now().millisecondsSinceEpoch;
     final timeDifference = currentTime - timestamp;
 
-    // data older than 24 hours
     if (timeDifference > 24 * 60 * 60 * 1000) {
       return null;
     }
+
     final weatherResponseStr =
         _sharedPreferences.getString(PREFS_KEY_LAST_SUCCESS_CITY);
-    if (weatherResponseStr == null) return null;
+
+    if (weatherResponseStr == null) {
+      return null;
+    }
+
+    // Try parsing the JSON string into a WeatherResponse object
     try {
       final Map<String, dynamic> weatherResponse =
-          jsonDecode(weatherResponseStr);
+          jsonDecode(weatherResponseStr) as Map<String, dynamic>;
+
       return WeatherResponse.fromJson(weatherResponse);
     } catch (e) {
-      return null;
+      // Log the error (optional)
+      print('Error parsing weather response: $e');
+      return null; // Return null if parsing fails
     }
   }
 }

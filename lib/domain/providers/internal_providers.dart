@@ -8,6 +8,7 @@ final defaultCitiesProvider = Provider.autoDispose<List<CityObject>>(
       CityObject(cityName: 'Berlin', lat: 52.5200, lng: 13.4050),
       CityObject(cityName: 'Dortmund', lat: 51.5136, lng: 7.4653),
       CityObject(cityName: 'Hamburg', lat: 53.5511, lng: 9.9937),
+      
     ];
   },
 );

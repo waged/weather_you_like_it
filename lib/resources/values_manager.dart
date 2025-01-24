@@ -1,5 +1,3 @@
-import 'package:weather_you_like_it/resources/assets_manager.dart';
-
 class AppMargin {
   static const double m4 = 4.0;
   static const double m8 = 8.0;
@@ -86,10 +84,3 @@ class AppSize {
 class DurationConstant {
   static const int d300 = 300;
 }
-
-final cityIcons = {
-  "Berlin": SVGAssets.berlin,
-  "Hamburg": SVGAssets.hamburg,
-  "Dortmund": SVGAssets.dortmund,
-  "MyLocation": SVGAssets.myLocation,
-};

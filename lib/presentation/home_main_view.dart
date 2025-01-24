@@ -9,6 +9,7 @@ import 'package:weather_you_like_it/domain/models/city_object.dart';
 import 'package:weather_you_like_it/domain/providers/future_providers.dart';
 import 'package:weather_you_like_it/domain/providers/internal_providers.dart';
 import 'package:weather_you_like_it/generated/l10n.dart';
+import 'package:weather_you_like_it/resources/assets_manager.dart';
 import 'package:weather_you_like_it/resources/values_manager.dart';
 import 'package:weather_you_like_it/widgets/fallback_weather_view.dart';
 import 'package:weather_you_like_it/widgets/main_weather_view.dart';
@@ -18,10 +19,18 @@ class HomeMainView extends ConsumerWidget {
 
   HomeMainView({super.key, required this.cityObject});
 
+  final cityIcons = {
+    "Berlin": SVGAssets.berlin,
+    "Hamburg": SVGAssets.hamburg,
+    "Dortmund": SVGAssets.dortmund,
+    "My Location": SVGAssets.myLocation,
+  };
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cities = ref.watch(defaultCitiesProvider);
 
+    // the static cities with dynamic city added
     final updatedCities = [
       ...cities,
       CityObject(
@@ -43,15 +52,10 @@ class HomeMainView extends ConsumerWidget {
         currentIndex == -1 ? updatedCities.length - 1 : currentIndex;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Weather You Like It!"),
-        elevation: 0,
-      ),
       body: SafeArea(
         child: Column(
           children: [
             const SizedBox(height: 16),
-            // Weather information or loading/error state
             Expanded(
               child: ref.watch(getCityWeatherFutureProvider(cityObject)).when(
                     data: (result) => result.fold(
