@@ -12,6 +12,8 @@ const String PREFS_KEY_LAST_SUCCESS_CITY = "PREFS_KEY_LAST_SUCCESS_CITY";
 const String PREFS_KEY_PERMISSIONS_DIALOG = "PREFS_KEY_PERMISSIONS_DIALOG";
 const String PREFS_KEY_METRIC = "PREFS_KEY_METRIC";
 const String PREFS_KEY_LANGUAGE = "PREFS_KEY_LANGUAGE";
+const String PREFS_KEY_LAST_SUCCESS_CITY_TIMESTAMP =
+    "PREFS_KEY_LAST_SUCCESS_TIME";
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -75,11 +77,24 @@ class AppPreferences {
 
   void setWeatherResponse({required WeatherResponse? weatherResponse}) async {
     final weatherResponseStr = jsonEncode(weatherResponse?.toJson());
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
     await _sharedPreferences.setString(
         PREFS_KEY_LAST_SUCCESS_CITY, weatherResponseStr);
+    await _sharedPreferences.setInt(
+        PREFS_KEY_LAST_SUCCESS_CITY_TIMESTAMP, timestamp);
   }
 
   Future<WeatherResponse?> getWeatherResponse() async {
+    final timestamp =
+        _sharedPreferences.getInt(PREFS_KEY_LAST_SUCCESS_CITY_TIMESTAMP) ??
+            DateTime.now().millisecondsSinceEpoch;
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+    final timeDifference = currentTime - timestamp;
+
+    // data older than 24 hours
+    if (timeDifference > 24 * 60 * 60 * 1000) {
+      return null;
+    }
     final weatherResponseStr =
         _sharedPreferences.getString(PREFS_KEY_LAST_SUCCESS_CITY);
     if (weatherResponseStr == null) return null;
