@@ -22,8 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "failedToGetLocation": MessageLookupByLibrary.simpleMessage(
+            "Failed to get location coordinates."),
         "finish": MessageLookupByLibrary.simpleMessage("Finish"),
         "humidity": MessageLookupByLibrary.simpleMessage("Humidity"),
+        "locationDisabled": MessageLookupByLibrary.simpleMessage(
+            "Location services are disabled."),
+        "locationPermissionDenied":
+            MessageLookupByLibrary.simpleMessage("Location permission denied."),
+        "myLocation": MessageLookupByLibrary.simpleMessage("My Location"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noDataFound": MessageLookupByLibrary.simpleMessage(
             "No data available. Please check your connection."),

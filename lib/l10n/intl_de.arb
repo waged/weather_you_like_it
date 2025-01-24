@@ -12,5 +12,6 @@
     "onBoardingTitle4": "Ihr personalisierter Wetterbegleiter",
     "onBoardingSubTitle4": "Passen Sie Ihre Wettererfahrung mit einem eleganten Design und Funktionen an, die auf Ihre Bedürfnisse zugeschnitten sind.",
     "noDataFound":"Keine Daten verfügbar. Bitte überprüfen Sie Ihre Verbindung.",
-      "humidity" : "Luftfeuchtigkeit"
+      "humidity" : "Luftfeuchtigkeit",
+      "myLocation":"Mein Standort"
 }

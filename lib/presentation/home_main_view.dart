@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:location/location.dart';
 import 'package:weather_you_like_it/app/app_prefs.dart';
 import 'package:weather_you_like_it/app/setup_locator.dart';
 import 'package:weather_you_like_it/domain/models/city_object.dart';
 import 'package:weather_you_like_it/domain/providers/future_providers.dart';
 import 'package:weather_you_like_it/domain/providers/internal_providers.dart';
+import 'package:weather_you_like_it/generated/l10n.dart';
 import 'package:weather_you_like_it/resources/assets_manager.dart';
 import 'package:weather_you_like_it/resources/values_manager.dart';
 import 'package:weather_you_like_it/widgets/fallback_weather_view.dart';
@@ -21,14 +23,34 @@ class HomeMainView extends ConsumerWidget {
     "Berlin": SVGAssets.berlin,
     "Hamburg": SVGAssets.hamburg,
     "Dortmund": SVGAssets.dortmund,
+    "MyLocation": SVGAssets.myLocation,
   };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cities = ref.watch(defaultCitiesProvider);
-    final currentIndex = cities.indexWhere(
-      (city) => city.lat == cityObject.lat && city.lng == cityObject.lng,
+
+    // Add "My Location" dynamically to the cities list
+    final updatedCities = [
+      ...cities,
+      CityObject(
+        cityName: S.current.myLocation,
+        lat: 0.0,
+        lng: 0.0,
+      ),
+    ];
+
+    final currentIndex = updatedCities.indexWhere(
+      (city) =>
+          city.cityName == cityObject.cityName &&
+          city.lat == cityObject.lat &&
+          city.lng == cityObject.lng,
     );
+
+    // Adjust currentIndex to ensure it is valid
+    final adjustedIndex =
+        currentIndex == -1 ? updatedCities.length - 1 : currentIndex;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Weather You Like It!"),
@@ -44,6 +66,7 @@ class HomeMainView extends ConsumerWidget {
                     data: (result) => result.fold(
                       (failure) => const FallbackWeatherView(),
                       (weatherResponse) {
+                        // Save the weather data for offline use
                         instanceGetIt.get<AppPreferences>().setWeatherResponse(
                             weatherResponse: weatherResponse);
 
@@ -60,25 +83,81 @@ class HomeMainView extends ConsumerWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Your action here
-        },
-        child: const Icon(
-            Icons.location_on_outlined), // Optional: Customize the color
-      ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          cityObject = cities[index];
-          ref.invalidate(getCityWeatherFutureProvider);
-          instanceGetIt
-              .get<AppPreferences>()
-              .setFavoriteCity(favCity: cityObject);
+        currentIndex: adjustedIndex,
+        onTap: (index) async {
+          final messenger = ScaffoldMessenger.of(context);
+
+          if (index == updatedCities.length - 1) {
+            // "My Location" selected, fetch user location
+            Location location = Location();
+
+            bool serviceEnabled = await location.serviceEnabled();
+            if (!serviceEnabled) {
+              serviceEnabled = await location.requestService();
+              if (!serviceEnabled) {
+                messenger.showSnackBar(
+                  SnackBar(
+                    content: Text(S.current.locationDisabled),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+            }
+
+            PermissionStatus permissionGranted = await location.hasPermission();
+            if (permissionGranted == PermissionStatus.denied) {
+              permissionGranted = await location.requestPermission();
+              if (permissionGranted != PermissionStatus.granted) {
+                messenger.showSnackBar(
+                  SnackBar(
+                    content: Text(S.current.locationPermissionDenied),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+            }
+
+            final locationData = await location.getLocation();
+            if (locationData.latitude != null &&
+                locationData.longitude != null) {
+              cityObject = CityObject(
+                cityName: S.current.myLocation,
+                lat: locationData.latitude!,
+                lng: locationData.longitude!,
+              );
+
+              // Save for offline refresh
+              instanceGetIt
+                  .get<AppPreferences>()
+                  .setFavoriteCity(favCity: cityObject);
+
+              // Refresh provider
+              ref.invalidate(getCityWeatherFutureProvider);
+            } else {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(S.current.failedToGetLocation),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          } else {
+            // Handle other cities
+            cityObject = updatedCities[index];
+            ref.invalidate(getCityWeatherFutureProvider);
+
+            // Save for offline refresh
+            instanceGetIt
+                .get<AppPreferences>()
+                .setFavoriteCity(favCity: cityObject);
+          }
         },
-        items: cities.map(
+        items: updatedCities.map(
           (city) {
-            final isSelected = cities.indexOf(city) == currentIndex;
+            final isSelected = updatedCities.indexOf(city) == adjustedIndex;
             return BottomNavigationBarItem(
               icon: Stack(
                 alignment: Alignment.center,
@@ -95,7 +174,7 @@ class HomeMainView extends ConsumerWidget {
                   SvgPicture.asset(
                     cityIcons[city.cityName]!,
                     width: isSelected ? AppSize.s28 : AppSize.s24,
-                    height: isSelected ? 28 : 24,
+                    height: isSelected ? AppSize.s28 : AppSize.s24,
                   ),
                 ],
               ),

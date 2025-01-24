@@ -189,6 +189,46 @@ class S {
       args: [],
     );
   }
+
+  /// `My Location`
+  String get myLocation {
+    return Intl.message(
+      'My Location',
+      name: 'myLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to get location coordinates.`
+  String get failedToGetLocation {
+    return Intl.message(
+      'Failed to get location coordinates.',
+      name: 'failedToGetLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location permission denied.`
+  String get locationPermissionDenied {
+    return Intl.message(
+      'Location permission denied.',
+      name: 'locationPermissionDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location services are disabled.`
+  String get locationDisabled {
+    return Intl.message(
+      'Location services are disabled.',
+      name: 'locationDisabled',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

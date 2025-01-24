@@ -12,5 +12,9 @@
     "onBoardingTitle4":"Your Personalized Weather Companion",
     "onBoardingSubTitle4":"Customize your weather experience with a sleek design and features tailored to your needs.",
     "noDataFound":"No data available. Please check your connection.",
-    "humidity" : "Humidity"
+    "humidity" : "Humidity",
+    "myLocation":"My Location",
+    "failedToGetLocation":"Failed to get location coordinates.",
+    "locationPermissionDenied":"Location permission denied.",
+    "locationDisabled":"Location services are disabled."
 }
